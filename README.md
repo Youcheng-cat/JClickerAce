@@ -6,8 +6,7 @@
 
 JClickerAce是一个*开源*、使用Java编写的鼠标键盘连点器，它可以帮助你快速点击某个按键。  
 外观使用了Swing和第三方库[FlatLaf](https://github.com/JFormDesigner/FlatLaf)构建，这使得外观更加现代化和扁平
-![Dark](images/dark.png)
-![Light](images/light.png)
+![Dark](images/dark.png)![Light](images/light.png)
 
 ## 获取
 
