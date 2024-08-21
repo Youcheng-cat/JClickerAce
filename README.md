@@ -27,10 +27,10 @@ JClickerAce的使用非常简单，只需要在`连点功能`主页面下点击�
 其他贡献者:没有
 
 本软件使用了一下一些库:
-+[FlafLaf](https://github.com/JFormDesigner/FlatLaf)
-+[FlatLaf-Extras](https://github.com/JFormDesigner/FlatLaf)
-+[MigLayout](https://github.com/mikaelgrev/miglayout)
-+[JNativeHook](https://github.com/kwhat/jnativehook)
+* [FlafLaf](https://github.com/JFormDesigner/FlatLaf)
+* [FlatLaf-Extras](https://github.com/JFormDesigner/FlatLaf)
+* [MigLayout](https://github.com/mikaelgrev/miglayout)
+* [JNativeHook](https://github.com/kwhat/jnativehook)
 再次感谢开源创作者们的付出！
 
 如果有意见，建议和见解，欢迎提出。
