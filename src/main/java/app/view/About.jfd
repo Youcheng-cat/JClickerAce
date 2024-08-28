@@ -1,0 +1,55 @@
+JFDML JFormDesigner: "8.2.3.0.386" Java: "17.0.11" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "this"
+			"title": "关于"
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+				name: "dialogPane"
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class net.miginfocom.swing.MigLayout ) {
+					"$layoutConstraints": "fill,insets dialog,hidemode 3"
+					"$columnConstraints": "[fill]"
+					"$rowConstraints": "[]"
+				} ) {
+					name: "contentPanel"
+					add( new FormComponent( "javax.swing.JEditorPane" ) {
+						name: "editorPane1"
+						"editable": false
+						"contentType": "text/html"
+						"text": "<html>\n<body>\n<h1>JClickerAce</h1>\nJClickerAce是一个开源的鼠标键盘连点器，作者14岁小升初一枚~<br>\n本项目使用Java编写，已使用MIT许可证开源，欢迎提出宝贵改进的意见！\n<p>\nGitHub：<a href='https://github.com/Youcheng-cat/JClickerAce'>https://github.com/Youcheng-cat/JClickerAce</a><br>\n作者B站主页：<a href='https://space.bilibili.com/1727948844'>@柚橙猫</a>\n</p>\n<footer>\nCopyright (c) 2024 Youcheng-cat\n</footer>\n</body>\n</html>"
+						"font": new java.awt.Font( "Microsoft YaHei UI", 0, 12 )
+						addEvent( new FormEvent( "javax.swing.event.HyperlinkListener", "hyperlinkUpdate", "editorPane1HyperlinkUpdate", true ) )
+					}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+						"value": "cell 0 0,dock center"
+					} )
+				}, new FormLayoutConstraints( class java.lang.String ) {
+					"value": "Center"
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class net.miginfocom.swing.MigLayout ) {
+					"$layoutConstraints": "insets dialog,alignx right"
+					"$columnConstraints": "[button,fill]"
+					"$rowSpecs": "[fill]"
+				} ) {
+					name: "buttonBar"
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "okButton"
+						"text": "确认"
+						"background": new com.jformdesigner.model.SwingColor( "Button.default.background" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "ok", true ) )
+					}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+						"value": "cell 0 0"
+					} )
+				}, new FormLayoutConstraints( class java.lang.String ) {
+					"value": "South"
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 400, 300 )
+		} )
+	}
+}
