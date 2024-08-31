@@ -1,6 +1,8 @@
 package com.youcheng.app.model;
 
 
+import com.github.kwhat.jnativehook.NativeInputEvent;
+import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import com.youcheng.app.util.ConfigManager;
 
 import java.awt.*;
@@ -12,6 +14,7 @@ public class ClickerModel {
     private boolean isEnableHud;
     //点击速度
     private int clickInterval;
+    private boolean enableClick;
     private int clickSpeed;
     private boolean useCPS;
     //按键Code
@@ -25,35 +28,59 @@ public class ClickerModel {
     //运行时数据
     private boolean isSetKey = false;
     private Thread clicker;
-    private volatile boolean  isClicking = false;
+    private volatile boolean isClicking = false;
     private boolean isKeyPreessed = false;
+    private boolean isMousePreessed = false;
+    public volatile RobotKey key;
 
     public ClickerModel() {
-        //一般配置项
+        initConfigs();
+        initClickerThread();
+    }
+
+    private void initConfigs() {
         isEnableOnApp = Boolean.parseBoolean(ConfigManager.getConfig("isEnableOnApp"));
         isEnableHud = Boolean.parseBoolean(ConfigManager.getConfig("isEnableHud"));
+        enableClick = Boolean.parseBoolean(ConfigManager.getConfig("enableClick"));
         clickInterval = getIntConfig("clickInterval");
         clickSpeed = getIntConfig("clickSpeed");
         useCPS = Boolean.parseBoolean(ConfigManager.getConfig("useCPS"));
         clickerMode = getIntConfig("clickerMode");
         laf = getIntConfig("laf");
 
-        //按键
         targetButton = new KeyConfig("targetButton");
         hotKey = new KeyConfig("hotKey");
         disableKey = new KeyConfig("disableKey");
+    }
 
+    public class RobotKey {
+        public boolean press;
+        public String type;
+        public int value;
+
+        public RobotKey(boolean press, String type, int value) {
+            this.press = press;
+            this.type = type;
+            this.value = value;
+        }
+    }
+
+    private void initClickerThread() {
         clicker = new Thread(() -> {
             try {
                 Robot robot = new Robot();
                 while (true) {
                     if (isClicking) {
-                        if (getTargetButton().getType().equals("mouse")) {
-                            robot.mousePress(getTargetButton().getButton());
-                            robot.mouseRelease(getTargetButton().getButton());
-                        }else {
-                            robot.keyPress(getTargetButton().getButton());
-                            robot.keyRelease(getTargetButton().getButton());
+                        if (targetButton.getType().equals("mouse")) {
+                            key = new RobotKey(true, "mouse", targetButton.getNativeButton());
+                            robot.mousePress(targetButton.getButton());
+                            key = new RobotKey(false, "mouse", targetButton.getNativeButton());
+                            robot.mouseRelease(targetButton.getButton());
+                        } else {
+                            key = new RobotKey(true, "key", targetButton.getButton());
+                            robot.keyPress(targetButton.getButton());
+                            key = new RobotKey(false, "key", targetButton.getButton());
+                            robot.keyRelease(targetButton.getButton());
                         }
                         robot.delay(getClickInterval());
                     }
@@ -71,6 +98,18 @@ public class ClickerModel {
 
     public void setKeyPreessed(boolean keyPreessed) {
         isKeyPreessed = keyPreessed;
+    }
+
+    public boolean isEnableClick() {
+        return enableClick;
+    }
+
+    public void setEnableClick(boolean enableClick) {
+        if (!enableClick) {
+            stopClick();
+        }
+        this.enableClick = enableClick;
+        ConfigManager.setConfig("enableClick", String.valueOf(enableClick));
     }
 
     public void startClick() {
@@ -165,24 +204,12 @@ public class ClickerModel {
         return disableKey;
     }
 
-    public void setDisableKey(KeyConfig disableKey) {
-        this.disableKey = disableKey;
-    }
-
     public KeyConfig getHotKey() {
         return hotKey;
     }
 
-    public void setHotKey(KeyConfig hotKey) {
-        this.hotKey = hotKey;
-    }
-
     public KeyConfig getTargetButton() {
         return targetButton;
-    }
-
-    public void setTargetButton(KeyConfig targetButton) {
-        this.targetButton = targetButton;
     }
 
     public boolean isSetKey() {
@@ -191,5 +218,13 @@ public class ClickerModel {
 
     public void setSetKey(boolean setKey) {
         isSetKey = setKey;
+    }
+
+    public boolean isMousePreessed() {
+        return isMousePreessed;
+    }
+
+    public void setMousePreessed(boolean mousePreessed) {
+        isMousePreessed = mousePreessed;
     }
 }
